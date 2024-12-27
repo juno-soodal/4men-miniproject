@@ -110,6 +110,11 @@
         .modal {
             color: black;
         }
+
+        .card>img {
+            width: 250px;
+            height: 300px;
+        }
     </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
@@ -204,10 +209,6 @@
             $('#guestbook').append(temp_html);
         });
 
-        function designed() {
-            alert('정준호, 장윤혁, 유은호, 이인학');
-        }
-
         var exampleModal = document.getElementById('exampleModal')
         exampleModal.addEventListener('show.bs.modal', function (event) {
             // Button that triggered the modal
@@ -223,6 +224,11 @@
 
             modalTitle.textContent = '멤버등록'
         })
+
+        $('#designed').click(function () {
+            alert('정준호, 장윤혁, 유은호, 이인학')
+        })
+ 
     </script>
 </head>
 
@@ -387,7 +393,7 @@
         <div class="container px-5">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <button onclick="designed()" class="btn" class="nav-item"><a class="nav-link active"
+                    <button id="designed" class="btn" class="nav-item"><a class="nav-link active"
                             aria-current="page" href="#!">Designed by</a></button>
                 </ul>
             </div>
