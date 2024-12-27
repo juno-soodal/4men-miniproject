@@ -19,16 +19,16 @@
             font-style: normal;
         }
 
-        .container {
-            width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        .full-width-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
         }
 
         .title {
+            width: 100%;
             text-align: center;
-            padding: 20px;
-            border: 1px solid white;
+            padding: 50px 0;
             margin-bottom: 20px;
             background-image: url('https://images.unsplash.com/photo-1513735539099-cf6e5d559d82?q=80&w=3772&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
@@ -38,8 +38,12 @@
         }
 
         .content {
+            width: 800px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
-            gap: 20px;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         .left-section {
@@ -51,7 +55,7 @@
         }
 
         .right-section {
-            width: 60%;
+            width: 58%;
             background-color: gray;
             display: flex;
             flex-direction: column;
@@ -134,12 +138,71 @@
         .back_btn {
             padding: 10px;
         }
-
     </style>
+
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQNEBL9e782JBMk00D0ey3SamXVFnCyM0",
+            authDomain: "sparta-c0f81.firebaseapp.com",
+            projectId: "sparta-c0f81",
+            storageBucket: "sparta-c0f81.firebasestorage.app",
+            messagingSenderId: "1083054784111",
+            appId: "1:1083054784111:web:2c0007c2bb79f1ce97179a",
+            measurementId: "G-HSRZCTYE5T"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //로딩해야할 정보 초기화 
+        var current_id = 0;
+
+        //로딩해야할 정보 url에서 파싱
+        var urlsearch = new URLSearchParams(location.search)
+        var urlObject = urlsearch.get('id');
+        var current_id = urlObject;
+
+        //정보 로딩하기
+        let docs = await getDocs(collection(db, "members"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            if (current_id == row['id']) {
+                console.log('hit');
+                $('#name').text(row['name']);
+                $('#mbti').text(row['mbti']);
+                $('#introduce').text(row['introduce']);
+                $('#goal').text(row['goal']);
+                $('#procons').text(row['procons']);
+            }
+        })
+    </script>
 </head>
 
 <body>
-    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" href="#!">4MEN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <button onclick="designed()" class="btn" class="nav-item"><a class="nav-link active"
+                            aria-current="page" href="#!">Designed by</a></button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="full-width-container">
         <div class="title">
             <h1>4 MEN</h1>
         </div>
@@ -152,28 +215,30 @@
                         alt="프로필 사진">
                 </div>
                 <div class="personal-info">
-                    <p>이름 : 김철수</p>
-                    <p>MBTI : INFP</p>
+                    <p>이름 : <span id="name">김철수</span></p>
+                    <p>MBTI : <span id="mbti">INFP</span></p>
                 </div>
             </div>
 
             <div class="right-section">
                 <div class="info-box1">
                     <h5>한 줄 소개</h5>
-                    <p>안녕하세요!</p>
+                    <p id="introduce">안녕하세요!</p>
                 </div>
                 <div class="info-box2">
                     <h5>목표(포부)</h5>
-                    <p>개발자가 되기 위해 노력하는 마음을 가지고 지치지 않게 멘탈 관리를 하겠습니다.</p>
+                    <p id="goal">개발자가 되기 위해 노력하는 마음을 가지고 지치지 않게 멘탈 관리를 하겠습니다.</p>
                 </div>
                 <div class="info-box3">
                     <h5>장단점</h5>
-                    <p>나의 장점은......... 단점은..........</p>
+                    <p id="procons">나의 장점은......... 단점은..........</p>
                 </div>
             </div>
         </div>
         <div class="back_btn">
-            <button type="button" class="btn btn-danger">뒤로가기</button>
+            <a href="./index.html">
+                <button type="button" class="btn btn-danger">뒤로가기</button>
+            </a>
         </div>
     </div>
 </body>
