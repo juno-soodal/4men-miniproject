@@ -80,12 +80,17 @@
 
             display: flex;
         }
-
         .guestbook_data {
             padding: 20px;
             margin-bottom: 200px;
 
             display: flex;
+            flex-direction: column;
+        }
+
+        .guest_comment {
+            display: flex;
+            flex-direction: row;
         }
 
         .comment_data {
@@ -152,16 +157,12 @@
 
             let temp_html = `
                 <div class="name">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">${nickname}</label>
-                    </div>
+                        <p style="background-color: transparent; color: white;" class="form-control"
+                            id="floatingInput">${nickname}</p>
                 </div>
                 <div class="comment_data">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">${comment}</label>
-                    </div>
+                        <p style="background-color: transparent; color: white;" class="form-control"
+                            id="floatingInput">${comment}</p>
                 </div>`;
             $('#guestbook').append(temp_html);
         });
@@ -244,8 +245,8 @@
                         <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fst.depositphotos.com%2F1177973%2F3836%2Fi%2F450%2Fdepositphotos_38368579-stock-photo-little-kitten-isolated-on-white.jpg&type=a340"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">유은호</h5>
-                            <p class="card-text">특징(한줄)</p>
+                            <h5 style="color: white;" class="card-title">유은호</h5>
+                            <p style="color: white;" class="card-text">특징(한줄)</p>
                         </div>
                     </div>
                 </div>
@@ -256,8 +257,8 @@
                         <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fst.depositphotos.com%2F1177973%2F3836%2Fi%2F450%2Fdepositphotos_38368579-stock-photo-little-kitten-isolated-on-white.jpg&type=a340"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">이인학</h5>
-                            <p class="card-text">특징(한줄)</p>
+                            <h5 style="color: white;" class="card-title">이인학</h5>
+                            <p style="color: white;" class="card-text">특징(한줄)</p>
                         </div>
                     </div>
                 </div>
@@ -268,8 +269,8 @@
                         <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fst.depositphotos.com%2F1177973%2F3836%2Fi%2F450%2Fdepositphotos_38368579-stock-photo-little-kitten-isolated-on-white.jpg&type=a340"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">장윤혁</h5>
-                            <p class="card-text">특징(한줄)</p>
+                            <h5 style="color: white;" class="card-title">장윤혁</h5>
+                            <p style="color: white;" class="card-text">특징(한줄)</p>
                         </div>
                     </div>
                 </div>
@@ -280,8 +281,8 @@
                         <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fst.depositphotos.com%2F1177973%2F3836%2Fi%2F450%2Fdepositphotos_38368579-stock-photo-little-kitten-isolated-on-white.jpg&type=a340"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">정준호</h5>
-                            <p class="card-text">특징(한줄)</p>
+                            <h5 style="color: white;" class="card-title">정준호</h5>
+                            <p style="color: white;" class="card-text">특징(한줄)</p>
                         </div>
                     </div>
                 </div>
@@ -304,20 +305,18 @@
                 </div>
                 <button id="postingbtn" type="button" class="btn btn-outline-dark">등록</button>
             </div>
-            <div class="guestbook_data" id="guestbook">
-                <div class="name">
-                    <div class="form-floating mb-3">
-                        <input style="background-color: transparent;" type="text" class="form-control"
-                            id="floatingInput" readonly>
+                <div class="guestbook_data" id="guestbook">
+                    <div class="guest_comment">
+                        <div class="name">
+                                <p style="background-color: transparent; color: white;" class="form-control"
+                                    id="floatingInput"></p>
+                        </div>
+                        <div class="comment_data">
+                                <p style="background-color: transparent; color: white;" class="form-control"
+                                    id="floatingInput"></p>
+                        </div>
                     </div>
                 </div>
-                <div class="comment_data">
-                    <div class="form-floating mb-3">
-                        <input style="background-color: transparent;" type="text" class="form-control"
-                            id="floatingInput" readonly>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
