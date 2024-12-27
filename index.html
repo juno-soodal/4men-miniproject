@@ -300,6 +300,7 @@
         });
 
         $('.comment-del').click(function() {
+            $("#commentPasswd").val('');
             $("#commentid").val($(this).data("commentno"));
             $("#exampleModal2").modal("show");
         })
@@ -315,24 +316,22 @@
             return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
         }
 
-        var exampleModal = document.getElementById('exampleModal')
-        exampleModal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
-            var button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            var recipient = button.getAttribute('data-bs-whatever')
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in ag callback.
-            //
-            // Update the modal's content.
-            var modalTitle = exampleModal.querySelector('.modal-title')
-            var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-            modalTitle.textContent = '멤버등록'
-        })
-
         $('#designed').click(function () {
             alert('정준호, 장윤혁, 유은호, 이인학')
+        })
+
+        $("#addMemberBtn").click(function () {
+            $('#image').val('');
+            $('#name').val('');
+            $('#mbti').val('');
+            $('#goal').val('');
+            $('#pros').val('');
+            $('#cons').val('');
+            $('#introduce').val('');
+            $('#short').val('');
+            $('#passwd').val('');
+
+            $('#addMemberModal').modal('show');
         })
 
     </script>
@@ -369,14 +368,13 @@
         </div>
     </div>
     <div class="mycards">
-        <button style="border-color: white; margin: 0px 0px 20px 92%;" type="button" class="btn btn-primary"
-            data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">멤버 등록</button>
+        <button id="addMemberBtn" style="border-color: white; margin: 0px 0px 20px 92%;" type="button" class="btn btn-primary">멤버 등록</button>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">멤버 등록</h5>
+                        <h5 class="modal-title" id="addMemberModalLabel">멤버 등록</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -483,7 +481,7 @@
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <footer class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container px-5">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -492,7 +490,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </footer>
 
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label">
         <div class="modal-dialog" role="document">

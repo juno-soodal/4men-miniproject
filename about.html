@@ -177,7 +177,7 @@
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs, getDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
@@ -245,10 +245,56 @@
             const docRef = doc(db, "members", current_id)
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                if(docSnap.data()['passwd']==$('#passwd').val()){
+                if (docSnap.data()['passwd'] == $('#passwd').val()) {
                     await deleteDoc(doc(db, "members", current_id));
                     alert('삭제되었습니다');
                     location.href = `./index.html`;
+                }
+                else
+                    return alert('비밀번호 오류');
+            } else {
+                console.log("조회 실패")
+            }
+        })
+
+        $('#updateMemberBtn').click(async function() {
+            const docRef = doc(db,"members", current_id)	
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()){
+            console.log(docSnap.id, docSnap.data())
+            const {imgurl,chara,cons,goal,id,introduce,mbti,name,pros} = docSnap.data();
+                $('#updateImgurl').val(imgurl);
+                $('#updateName').val(name);
+                $('#updateMbti').val(mbti);
+                $('#updateGoal').val(goal);
+                $('#updatePros').val(pros);
+                $('#updateCons').val(cons);
+                $('#updateIntroduce').val(introduce);
+                $('#updateChara').val(chara);
+                console.log(imgurl)
+                $('#updateMemberModal').modal('show');
+            }else {
+                console.log("조회 실패")
+            }
+        })
+
+        $('#updateFormBtn').click(async function() {
+            const docRef = doc(db, "members", current_id)
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                if (docSnap.data()['passwd'] === $('#updatePasswd').val()) {
+                    await updateDoc(doc(db, "members", docSnap.id), {
+                        imgurl:$('#updateImgurl').val(),
+                        name:$('#updateName').val(),
+                        mbti:$('#updateMbti').val(),
+                        goal:$('#updateGoal').val(),
+                        pros:$('#updatePros').val(),
+                        cons:$('#updateCons').val(),
+                        introduce:$('#updateIntroduce').val(),
+                        chara:$('#updateChara').val()
+                    });
+                    alert('수정되었습니다.');
+                    window.location.reload();
                 }
                 else
                     return alert('비밀번호 오류');
@@ -309,40 +355,14 @@
                 </a>
             </div>
             <div class="cardDle">
+                <button id="updateMemberBtn" type="button" class="btn btn-primary">멤버 수정</button>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo">멤버 삭제</button>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">멤버 삭제</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="passwd" class="col-form-label">패스워드:</label>
-                                        <input type="password" class="form-control" id="passwd">
-                                    </div>
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="deleteButton" style="background-color: red;" type="button"
-                                    class="btn btn-primary">삭제</button>
-                                <button style="background-color: gray;" type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">닫기</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    
             </div>
-        </div>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        </div>
+        <footer class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -351,7 +371,91 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </footer>
+
+        <!-- 삭제 모달 -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">멤버 삭제</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="passwd" class="col-form-label">패스워드:</label>
+                                <input type="password" class="form-control" id="passwd">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="deleteButton" style="background-color: red;" type="button"
+                            class="btn btn-primary">삭제</button>
+                        <button style="background-color: gray;" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 수정 모달 -->
+        <div class="modal fade" id="updateMemberModal" tabindex="-1" role="dialog" aria-labelledby="updateMemberModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="updateMemberModalLabel">멤버 수정</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateModalForm">
+                            <div class="mb-3">
+                                <label for="updatePasswd" class="col-form-label">패스워드:</label>
+                                <input type="password" class="form-control" id="updatePasswd" name="updatePasswd">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateImgurl" class="col-form-label">사진:</label>
+                                <input type="text" class="form-control" id="updateImgurl" name="imgurl">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateName" class="col-form-label">이름:</label>
+                                <input type="text" class="form-control" id="updateName" name="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateMbti" class="col-form-label">mbti:</label>
+                                <input type="text" class="form-control" id="updateMbti" name="mbti">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateIntroduce" class="col-form-label">한 줄 소개:</label>
+                                <input type="text" class="form-control" id="updateIntroduce" name="introduce">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateChara" class="col-form-label">짧은 소개:</label>
+                                <input type="text" class="form-control" id="updateChara" name="chara">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateGoal" class="col-form-label">목표(포부):</label>
+                                <textarea class="form-control" id="updateGoal" name="goal"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updatePros" class="col-form-label">장점:</label>
+                                <input type="text" class="form-control" id="updatePros" name="pros">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateCons" class="col-form-label">단점:</label>
+                                <input type="text" class="form-control" id="updateCons" name="cons">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button id="updateFormBtn" type="button" class="btn btn-primary">수정</button>
+                      <button type="button" class="btn btn-secondary"
+                      data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>
