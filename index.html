@@ -167,13 +167,15 @@
         //방명록 버튼
         $("#postingbtn").click(async function () {
             let nickname = $('#nickname').val();
-            if(nickname == "")
+            if(nickname == ""){
                 alert('별명을 입력해주세요!');
-            return;
+                return;
+            }
             let comment = $('#comment').val();
-            if(comment == "")
+            if(comment == ""){
                 alert('코멘트을 입력해주세요!');  
-            return;  
+                return;  
+            }
             let date = new Date();
             let doc = {
                 'nickname': nickname,
