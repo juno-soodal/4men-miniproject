@@ -136,7 +136,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, updateDoc, deleteDoc, doc ,getDoc} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -236,8 +236,11 @@
 
         //방명록 삭제버튼
         $('#deleteButton').click(async function () {
-
-            let id = $(this).data("id")
+            let id = $("#commentid").val();
+            if(!id) {
+                console.log("삭제 오류")
+                return;
+            }
 
             const docRef = doc(db, "guestbook", id)
             const docSnap = await getDoc(docRef);
@@ -281,10 +284,15 @@
                             <p style="background-color: transparent; color: white;" class="form-control"
                                 id="floatingInput">${comment}</p>
                     </div>
-                    <button type="button" class="btn btn-danger" data-commentno="${doc.id}" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@mdo">삭제</button>
+                    <button type="button" class="btn btn-danger comment-del" data-commentno="${doc.id}">삭제</button>
                 </div>`
             $('#guestbook').append(temp_html);
         });
+
+        $('.comment-del').click(function() {
+            $("#commentid").val($(this).data("commentno"));
+            $("#exampleModal2").modal("show");
+        })
 
         function formatDate(date) {
             let year = date.getFullYear();
@@ -311,25 +319,6 @@
             var modalBodyInput = exampleModal.querySelector('.modal-body input')
 
             modalTitle.textContent = '멤버등록'
-        })
-
-        var exampleModal = document.getElementById('exampleModal2')
-        exampleModal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
-            var button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            var recipient = button.getAttribute('data-bs-whatever')
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in ag callback.
-            //
-            // Update the modal's content.
-            var modalTitle = exampleModal.querySelector('.modal-title')
-            var modalBodyInput = exampleModal.querySelector('.modal-body input')
-            
-            modalTitle.textContent = '방명록 삭제'
-            console.log(this);
-            console.log(event.target.data("commentno"));
-            $('#commentid').val($(this).data("commentno"));  
         })
 
         $('#designed').click(function () {
@@ -373,7 +362,7 @@
         <button style="border-color: white; margin: 0px 0px 20px 92%;" type="button" class="btn btn-primary"
             data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">멤버 등록</button>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -493,44 +482,34 @@
                 </ul>
             </div>
         </div>
+    </nav>
 
-
-        <div class="cardDle2">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2"
-                data-bs-whatever="@mdo">멤버 삭제</button>
-
-            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel2">멤버 삭제</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="passwd" class="col-form-label">패스워드:</label>
-                                    <input type="password" class="form-control" id="passwd">
-                                    <input type="hidden" class="form-control" id="commentid">
-                                </div>
-                            </form>
-                        </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="deleteButton" style="background-color: red;" type="button"
-                                class="btn btn-primary">삭제</button>
-                            <button style="background-color: gray;" type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">닫기</button>
-                        </div>
-                    </div>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel2">멤버 삭제</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                      <div class="mb-3">
+                          <label for="passwd" class="col-form-label">패스워드:</label>
+                          <input type="password" class="form-control" id="commentPasswd">
+                          <input type="hidden" class="form-control" id="commentid">
+                      </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button id="deleteButton" style="background-color: red;" type="button"
+                  class="btn btn-primary">삭제</button>
+                  <button style="background-color: gray;" type="button" class="btn btn-secondary"
+                  data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
-
-
-    </nav>
+    </div>
 </body>
 
 </html>
