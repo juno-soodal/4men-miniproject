@@ -69,6 +69,10 @@
             margin-right: 30px;
         }
 
+        .password{
+            margin-right: 30px;
+        }
+
         .form-floating>input {
             background-color: transparent;
             margin-right: 20px;
@@ -109,6 +113,11 @@
 
         .comment_data {
             width: 100%;
+            margin-right: 10px;
+        }
+
+        .delete_comment{
+            width: 80px;
         }
 
         .guestbook_writing>button {
@@ -128,7 +137,7 @@
         }
 
         .timestamp {
-            font-size: 5pt;
+            font-size: 8pt;
         }
     </style>
     <script type="module">
@@ -155,7 +164,6 @@
         const db = getFirestore(app);
 
         //멤버 등록
-
         $('#saveTeam').click(async function () {
             const imgurl = $('#image').val();
             const name = $('#name').val();
@@ -278,13 +286,15 @@
                 <div class="guest_comment">
                     <div class="name_data">
                             <p style="background-color: transparent; color: white;" class="form-control"
-                                id="floatingInput">${nickname} <span class="timestamp">${timestamp}</span></p>
+                                id="floatingInput">${nickname} <span class="timestamp"></br>${timestamp}</span></p>
                     </div>
                     <div class="comment_data">
                             <p style="background-color: transparent; color: white;" class="form-control"
                                 id="floatingInput">${comment}</p>
                     </div>
-                    <button type="button" class="btn btn-danger comment-del" data-commentno="${doc.id}">삭제</button>
+                    <div class="delete_comment">
+                        <button type="button" class="btn btn-danger comment-del" data-commentno="${doc.id}">삭제</button>
+                    </div>
                 </div>`
             $('#guestbook').append(temp_html);
         });
