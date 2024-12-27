@@ -80,6 +80,7 @@
 
             display: flex;
         }
+
         .guestbook_data {
             padding: 20px;
             margin-bottom: 200px;
@@ -91,6 +92,7 @@
         .guest_comment {
             display: flex;
             flex-direction: row;
+            margin-bottom: 20px;
         }
 
         .comment_data {
@@ -148,8 +150,8 @@
                         <div class="card">
                             <img src=${imgurl} class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${chara}</p>
+                                <h5 style="color: white;" class="card-title">${name}</h5>
+                                <p style="color: white;" class="card-text">${chara}</p>
                             </div>
                         </div>
                     </a>
@@ -181,21 +183,38 @@
             let comment = row['comment'];
 
             let temp_html = `
-                <div class="name">
-                        <p style="background-color: transparent; color: white;" class="form-control"
-                            id="floatingInput">${nickname}</p>
-                </div>
-                <div class="comment_data">
-                        <p style="background-color: transparent; color: white;" class="form-control"
-                            id="floatingInput">${comment}</p>
-                </div>`;
+                <div class="guest_comment">
+                    <div class="name">
+                            <p style="background-color: transparent; color: white;" class="form-control"
+                                id="floatingInput">${nickname}</p>
+                    </div>
+                    <div class="comment_data">
+                            <p style="background-color: transparent; color: white;" class="form-control"
+                                id="floatingInput">${comment}</p>
+                    </div>
+                </div>`
             $('#guestbook').append(temp_html);
         });
 
-        //모듈로 인해 비활성화 상태
         function designed() {
             alert('정준호, 장윤혁, 유은호, 이인학');
         }
+
+        var exampleModal = document.getElementById('exampleModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            var modalTitle = exampleModal.querySelector('.modal-title')
+            var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            modalTitle.textContent = '멤버등록'
+        })
     </script>
 </head>
 
@@ -220,13 +239,18 @@
             </div>
             <div class="goal">
                 <h1 class="font-weight-light">목표</h1>
-                <p>쏼라쏼라</p>
+                <ol>
+                    <li>기초 다지기</li>
+                    <li>팀워크 강화</li>
+                    <li>프로젝트 경험 쌓기</li>
+                    <li>지속적인 학습 습관 형성</li>
+                </ol>
             </div>
         </div>
     </div>
     <div class="mycards">
-        <button style="border-color: white; margin: 0px 0px 20px 92%;" type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#exampleModal" data-bs-whatever="@mdo">멤버 등록</button>
+        <button style="border-color: white; margin: 0px 0px 20px 92%;" type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">멤버 등록</button>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -239,6 +263,14 @@
                         <form>
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">사진:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">이름:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">mbti:</label>
                                 <input type="text" class="form-control" id="recipient-name">
                             </div>
                             <div class="mb-3">
@@ -317,8 +349,7 @@
             <div class="guestbook_writing">
                 <div class="name">
                     <div class="form-floating mb-3">
-                        <input id="nickname" type="email" class="form-control"
-                            placeholder="name@example.com">
+                        <input id="nickname" type="email" class="form-control" placeholder="name@example.com">
                         <label for="nickname">닉네임</label>
                     </div>
                 </div>
@@ -330,18 +361,18 @@
                 </div>
                 <button id="postingbtn" type="button" class="btn btn-outline-dark">등록</button>
             </div>
-                <div class="guestbook_data" id="guestbook">
-                    <div class="guest_comment">
-                        <div class="name">
-                                <p style="background-color: transparent; color: white;" class="form-control"
-                                    id="floatingInput"></p>
-                        </div>
-                        <div class="comment_data">
-                                <p style="background-color: transparent; color: white;" class="form-control"
-                                    id="floatingInput"></p>
-                        </div>
+            <div class="guestbook_data" id="guestbook">
+                <div class="guest_comment">
+                    <div class="name">
+                        <p style="background-color: transparent; color: white;" class="form-control" id="floatingInput">
+                        </p>
+                    </div>
+                    <div class="comment_data">
+                        <p style="background-color: transparent; color: white;" class="form-control" id="floatingInput">
+                        </p>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -354,26 +385,6 @@
             </div>
         </div>
     </nav>
-    <script>
-        function designed() {
-            alert('정준호, 장윤혁, 유은호, 이인학');
-        }
-        var exampleModal = document.getElementById('exampleModal')
-        exampleModal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
-            var button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            var recipient = button.getAttribute('data-bs-whatever')
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in a callback.
-            //
-            // Update the modal's content.
-            var modalTitle = exampleModal.querySelector('.modal-title')
-            var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-            modalTitle.textContent = '멤버등록'
-        })
-    </script>
 </body>
 
 </html>

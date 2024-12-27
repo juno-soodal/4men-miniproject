@@ -1,2 +1,6 @@
 @import "./index.css";
 @import "./about.css";
+
+a {
+    text-decoration: none;
+}
