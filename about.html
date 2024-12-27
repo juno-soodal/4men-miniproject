@@ -134,8 +134,53 @@
         .back_btn {
             padding: 10px;
         }
-
     </style>
+
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQNEBL9e782JBMk00D0ey3SamXVFnCyM0",
+            authDomain: "sparta-c0f81.firebaseapp.com",
+            projectId: "sparta-c0f81",
+            storageBucket: "sparta-c0f81.firebasestorage.app",
+            messagingSenderId: "1083054784111",
+            appId: "1:1083054784111:web:2c0007c2bb79f1ce97179a",
+            measurementId: "G-HSRZCTYE5T"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //로딩해야할 정보 초기화 
+        var current_id = 0;
+
+        //로딩해야할 정보 url에서 파싱
+        var urlsearch = new URLSearchParams(location.search)
+        var urlObject = urlsearch.get('id');
+        var current_id = urlObject;
+
+        //정보 로딩하기
+        let docs = await getDocs(collection(db, "members"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            if (current_id == row['id']) {
+                console.log('hit');
+                $('#name').text(row['name']);
+                $('#mbti').text(row['mbti']);
+                $('#introduce').text(row['introduce']);
+                $('#goal').text(row['goal']);
+                $('#procons').text(row['procons']);
+            }
+        })
+    </script>
 </head>
 
 <body>
@@ -152,28 +197,30 @@
                         alt="프로필 사진">
                 </div>
                 <div class="personal-info">
-                    <p>이름 : 김철수</p>
-                    <p>MBTI : INFP</p>
+                    <p>이름 : <span id="name">김철수</span></p>
+                    <p>MBTI : <span id="mbti">INFP</span></p>
                 </div>
             </div>
 
             <div class="right-section">
                 <div class="info-box1">
                     <h5>한 줄 소개</h5>
-                    <p>안녕하세요!</p>
+                    <p id="introduce">안녕하세요!</p>
                 </div>
                 <div class="info-box2">
                     <h5>목표(포부)</h5>
-                    <p>개발자가 되기 위해 노력하는 마음을 가지고 지치지 않게 멘탈 관리를 하겠습니다.</p>
+                    <p id="goal">개발자가 되기 위해 노력하는 마음을 가지고 지치지 않게 멘탈 관리를 하겠습니다.</p>
                 </div>
                 <div class="info-box3">
                     <h5>장단점</h5>
-                    <p>나의 장점은......... 단점은..........</p>
+                    <p id="procons">나의 장점은......... 단점은..........</p>
                 </div>
             </div>
         </div>
         <div class="back_btn">
-            <button type="button" class="btn btn-danger">뒤로가기</button>
+            <a href="./index.html">
+                <button type="button" class="btn btn-danger">뒤로가기</button>
+            </a>
         </div>
     </div>
 </body>
