@@ -132,6 +132,31 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        //멤버 로딩
+        $('#members').empty();
+        let mems = await getDocs(collection(db, "members"));
+        mems.forEach((mem) => {
+            let row = mem.data();
+            let imgurl = row['imgurl'];
+            let name = row['name'];
+            let chara = row['chara'];
+            let id = row['id'];
+
+            let temp_html = `
+                <div class="col">
+                    <a href = "./about.html?id=${id}">
+                        <div class="card">
+                            <img src=${imgurl} class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${name}</h5>
+                                <p class="card-text">${chara}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>`;
+            $('#members').append(temp_html);
+        });
+
         //방명록 버튼
         $("#postingbtn").click(async function () {
             let nickname = $('#nickname').val();
@@ -200,6 +225,7 @@
         </div>
     </div>
     <div class="mycards">
+<<<<<<< HEAD
         <button style="border-color: white; margin: 0px 0px 20px 92%;" type="button" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#exampleModal" data-bs-whatever="@mdo">멤버 등록</button>
 
@@ -239,6 +265,9 @@
             </div>
         </div>
         <div class="row row-cols-1 row-cols-md-4 g-4">
+=======
+        <div id="members" class="row row-cols-1 row-cols-md-4 g-4">
+>>>>>>> 1e670d12e338821fe87c648c97d42b82c2e422f7
             <a href="./about.html?id=0">
                 <div class="col">
                     <div class="card">
@@ -292,15 +321,15 @@
             <div class="guestbook_writing">
                 <div class="name">
                     <div class="form-floating mb-3">
-                        <input id="nickname" type="email" class="form-control" id="floatingInput"
+                        <input id="nickname" type="email" class="form-control"
                             placeholder="name@example.com">
-                        <label for="floatingInput">닉네임</label>
+                        <label for="nickname">닉네임</label>
                     </div>
                 </div>
                 <div class="comment">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">한마디</label>
+                        <input type="email" class="form-control" id="comment" placeholder="name@example.com">
+                        <label for="comment">한마디</label>
                     </div>
                 </div>
                 <button id="postingbtn" type="button" class="btn btn-outline-dark">등록</button>
