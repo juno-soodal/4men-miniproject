@@ -72,6 +72,8 @@
             margin: 0 auto;
             position: relative;
             padding: 40px 15px 15px 15px;
+            overflow: auto;
+            max-height: 200px;
         }
 
         .info-box2 {
@@ -81,6 +83,8 @@
             margin: 0 auto;
             position: relative;
             padding: 40px 15px 15px 15px;
+            overflow: auto;
+            max-height: 200px;
         }
 
         .info-box3 {
@@ -90,6 +94,8 @@
             margin: 0 auto;
             position: relative;
             padding: 40px 15px 15px 15px;
+            overflow: auto;
+            max-height: 200px;
         }
 
         .info-box1 h5 {
@@ -97,6 +103,9 @@
             top: 10px;
             left: 15px;
             margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .info-box2 h5 {
@@ -104,6 +113,9 @@
             top: 10px;
             left: 15px;
             margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .info-box3 h5 {
@@ -111,6 +123,9 @@
             top: 10px;
             left: 15px;
             margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .profile-section {
@@ -177,7 +192,7 @@
             let row = doc.data();
             if (current_id == row['id']) {
                 console.log('hit');
-                
+
                 $('#imgurl').empty();
                 $('#imgurl').append(`<img src=${row['imgurl']} alt="프로필 사진">`);
                 $('#name').text(row['name']);
