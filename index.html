@@ -141,7 +141,7 @@
 
         //멤버 로딩
         $('#members').empty();
-        let mems = await getDocs(query(collection(db, "members"), orderBy('name','asc')));
+        let mems = await getDocs(query(collection(db, "members"), orderBy('name', 'asc')));
         mems.forEach((mem) => {
             let row = mem.data();
             let imgurl = row['imgurl'];
@@ -150,37 +150,43 @@
             let id = row['id'];
 
             let temp_html = `
-                <div class="col">
-                    <a href = "./about.html?id=${id}">
-                        <div class="card">
-                            <img src=${imgurl} class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 style="color: white;" class="card-title">${name}</h5>
-                                <p style="color: white;" class="card-text">${chara}</p>
-                            </div>
+                <div class="col custom-class" data-id="${id}">
+                    <div class="card">
+                        <img src="${imgurl}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 style="color: white;" class="card-title">${name}</h5>
+                            <p style="color: white;" class="card-text">${chara}</p>
                         </div>
-                    </a>
+                    </div>
                 </div>`;
             $('#members').append(temp_html);
+        });
+
+        //멤버 버튼
+        $(".custom-class").click(function () {
+            let id = this.data("id")
+            let url = `./about.html?id=${id}`
+            location.href = url;
         });
 
         //방명록 버튼
         $("#postingbtn").click(async function () {
             let nickname = $('#nickname').val();
-            if(nickname == ""){
+            if (nickname == "") {
                 alert('별명을 입력해주세요!');
                 return;
             }
             let comment = $('#comment').val();
-            if(comment == ""){
-                alert('코멘트을 입력해주세요!');  
-                return;  
+            if (comment == "") {
+                alert('코멘트을 입력해주세요!');
+                return;
             }
             let date = new Date();
+
             let doc = {
                 'nickname': nickname,
                 'comment': comment,
-                'date' : date
+                'date': date
             };
 
             await addDoc(collection(db, "guestbook"), doc);
@@ -230,7 +236,7 @@
         $('#designed').click(function () {
             alert('정준호, 장윤혁, 유은호, 이인학')
         })
- 
+
     </script>
 </head>
 
@@ -395,8 +401,8 @@
         <div class="container px-5">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <button id="designed" class="btn" class="nav-item"><a class="nav-link active"
-                            aria-current="page" href="#!">Designed by</a></button>
+                    <button id="designed" class="btn" class="nav-item"><a class="nav-link active" aria-current="page"
+                            href="#!">Designed by</a></button>
                 </ul>
             </div>
         </div>

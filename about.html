@@ -194,7 +194,7 @@
             let row = doc.data();
             if (current_id == row['id']) {
                 $('#imgurl').empty();
-                $('#imgurl').append(`<img src=${row['imgurl']} alt="프로필 사진">`);
+                $('#imgurl').append(`<img src="${row['imgurl']}" alt="프로필 사진">`);
                 $('#name').text(row['name']);
                 $('#mbti').text(row['mbti']);
                 $('#introduce').text(row['introduce']);
