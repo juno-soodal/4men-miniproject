@@ -208,8 +208,8 @@
         //정보 로딩하기
         let docs = await getDocs(collection(db, "members"));
         docs.forEach((doc) => {
-            let row = doc.data();
-            if (current_id == row['id']) {
+            if (current_id == doc.id) {
+                let row = doc.data();
                 $('#imgurl').empty();
                 $('#imgurl').append(`<img src="${row['imgurl']}" alt="프로필 사진">`);
                 $('#name').text(row['name']);
@@ -281,9 +281,8 @@
                 </div>
                 <div class="info-box3">
                     <h5>장단점</h5>
-                    <p><span id="pros">나의 장점은.........</span></br>
-                        <span id="cons">나의 단점은..........</span>
-                    </p>
+                    <p>장점: <span id="pros">나의 장점은.........</span></br>
+                    단점: <span id="cons">나의 단점은..........</span></p>
                 </div>
             </div>
         </div>
