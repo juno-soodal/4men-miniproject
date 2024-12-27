@@ -193,15 +193,14 @@
         docs.forEach((doc) => {
             let row = doc.data();
             if (current_id == row['id']) {
-                console.log('hit');
-
                 $('#imgurl').empty();
                 $('#imgurl').append(`<img src=${row['imgurl']} alt="프로필 사진">`);
                 $('#name').text(row['name']);
                 $('#mbti').text(row['mbti']);
                 $('#introduce').text(row['introduce']);
                 $('#goal').text(row['goal']);
-                $('#procons').text(row['procons']);
+                $('#pros').text(row['pros']);
+                $('#cons').text(row['cons']);
             }
         })
     </script>
@@ -251,7 +250,8 @@
                 </div>
                 <div class="info-box3">
                     <h5>장단점</h5>
-                    <p id="procons">나의 장점은......... 단점은..........</p>
+                    <p id="pros">나의 장점은......... </p>
+                    <p id="cons">나의 단점은..........</p>
                 </div>
             </div>
         </div>
