@@ -120,7 +120,7 @@
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
@@ -141,7 +141,7 @@
 
         //멤버 로딩
         $('#members').empty();
-        let mems = await getDocs(collection(db, "members"));
+        let mems = await getDocs(query(collection(db, "members"), orderBy('name','asc')));
         mems.forEach((mem) => {
             let row = mem.data();
             let imgurl = row['imgurl'];
@@ -167,11 +167,18 @@
         //방명록 버튼
         $("#postingbtn").click(async function () {
             let nickname = $('#nickname').val();
+            if(nickname == "")
+                alert('별명을 입력해주세요!');
+            return;
             let comment = $('#comment').val();
-
+            if(comment == "")
+                alert('코멘트을 입력해주세요!');  
+            return;  
+            let date = new Date();
             let doc = {
                 'nickname': nickname,
                 'comment': comment,
+                'date' : date
             };
 
             await addDoc(collection(db, "guestbook"), doc);
@@ -180,12 +187,13 @@
 
         //방명록 로딩
         $('#guestbook').empty();
-        let docs = await getDocs(collection(db, "guestbook"));
+        let docs = await getDocs(query(collection(db, "guestbook"), orderBy('date', 'desc')));
         docs.forEach((doc) => {
             let row = doc.data();
 
             let nickname = row['nickname'];
             let comment = row['comment'];
+            let date = row['date'];
 
             let temp_html = `
                 <div class="guest_comment">
