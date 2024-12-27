@@ -176,11 +176,11 @@
             let imgurl = row['imgurl'];
             let name = row['name'];
             let chara = row['chara'];
-            let id = row['id'];
+            let id = mem.id;
 
             let temp_html = `
-                <div class="col custom-class" data-id="${id}">
-                    <div class="card">
+                <div class="col">
+                    <div class="card custom-class" data-id="${id}">
                         <img src="${imgurl}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 style="color: white;" class="card-title">${name}</h5>
@@ -201,15 +201,13 @@
         //방명록 버튼
         $("#postingbtn").click(async function () {
             let nickname = $('#nickname').val();
-            if (nickname == "") {
-                alert('별명을 입력해주세요!');
-                return;
-            }
+            if (!nickname) 
+                return alert('별명을 입력해주세요!');
+            
             let comment = $('#comment').val();
-            if (comment == "") {
-                alert('코멘트을 입력해주세요!');
-                return;
-            }
+            if (!comment) 
+                return alert('코멘트을 입력해주세요!');
+
             let date = new Date();
 
             let doc = {
