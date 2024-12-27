@@ -139,6 +139,26 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        //멤버 등록
+
+        $('#saveTeam').click(async function() {
+            const image = $('#image').val();
+            const name = $('#name').val();
+            const mbti = $('#mbti').val();
+            const goal = $('#goal').val();
+            const pros = $('#pros').val();
+            const cons = $('#cons').val();
+            const introduce = $('#introduce').val();
+            const short = $('#short').val();
+
+
+            const doc = {
+                image, name, mbti, goal, pros, cons, introduce, id:new Date().getTime(), chara:short
+            };
+            await addDoc(collection(db, "members"), doc);
+            window.location.reload()
+        }) 
+
         //멤버 로딩
         $('#members').empty();
         let mems = await getDocs(query(collection(db, "members"), orderBy('name','asc')));
@@ -278,35 +298,43 @@
                     <div class="modal-body">
                         <form>
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">사진:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="iamge" class="col-form-label">사진:</label>
+                                <input type="text" class="form-control" id="image">
                             </div>
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">이름:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="name" class="col-form-label">이름:</label>
+                                <input type="text" class="form-control" id="name">
                             </div>
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">mbti:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="mbti" class="col-form-label">mbti:</label>
+                                <input type="text" class="form-control" id="mbti">
                             </div>
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">한 줄 소개:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="introduce" class="col-form-label">한 줄 소개:</label>
+                                <input type="text" class="form-control" id="introduce">
                             </div>
                             <div class="mb-3">
-                                <label for="message-text" class="col-form-label">목표(포부):</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                                <label for="short" class="col-form-label">짧은 소개:</label>
+                                <input type="text" class="form-control" id="short">
                             </div>
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">장단점:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="goal" class="col-form-label">목표(포부):</label>
+                                <textarea class="form-control" id="goal"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pros" class="col-form-label">장점:</label>
+                                <input type="text" class="form-control" id="pros">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cons" class="col-form-label">단점:</label>
+                                <input type="text" class="form-control" id="cons">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button style="background-color: gray;" type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">닫기</button>
-                        <button style="background-color: blue;" type="button" class="btn btn-primary">등록</button>
+                        <button id="saveTeam" style="background-color: blue;" type="button" class="btn btn-primary">등록</button>
                     </div>
                 </div>
             </div>
