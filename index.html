@@ -142,7 +142,7 @@
         //멤버 등록
 
         $('#saveTeam').click(async function() {
-            const image = $('#image').val();
+            const imgurl = $('#image').val();
             const name = $('#name').val();
             const mbti = $('#mbti').val();
             const goal = $('#goal').val();
@@ -150,10 +150,13 @@
             const cons = $('#cons').val();
             const introduce = $('#introduce').val();
             const short = $('#short').val();
+            const passwd = $('#passwd').val();
 
-
+            if(!passwd) {
+                return alert('비밀번호를 입력하시오')
+            }
             const doc = {
-                image, name, mbti, goal, pros, cons, introduce, id:new Date().getTime(), chara:short
+                imgurl, name, mbti, goal, pros, cons, introduce, id:new Date().getTime(), chara:short, passwd
             };
             await addDoc(collection(db, "members"), doc);
             window.location.reload()
@@ -335,6 +338,11 @@
                                 <label for="cons" class="col-form-label">단점:</label>
                                 <input type="text" class="form-control" id="cons">
                             </div>
+                            <div class="mb-3">
+                                <label for="passwd" class="col-form-label">패스워드:</label>
+                                <input type="password" class="form-control" id="passwd">
+                            </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">
