@@ -168,6 +168,7 @@
         }
 
         .cardDle {
+            margin-left: auto;
             padding: 0;
         }
     </style>
@@ -176,9 +177,8 @@
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDatabase, ref, remove } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, getDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -194,7 +194,6 @@
 
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
         const db = getFirestore(app);
 
         //로딩해야할 정보 초기화 
@@ -240,6 +239,25 @@
         $('#designed').click(function () {
             alert('정준호, 장윤혁, 유은호, 이인학')
         })
+
+        //멤버 삭제
+        $('#deleteButton').click(async function () {
+            const docRef = doc(db, "members", current_id)
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                if(docSnap.data()['passwd']==$('#passwd').val()){
+                    await deleteDoc(doc(db, "members", current_id));
+                    alert('삭제되었습니다');
+                    location.href = `./index.html`;
+                }
+                else
+                    return alert('비밀번호 오류');
+            } else {
+                console.log("조회 실패")
+            }
+        })
+
+
     </script>
 </head>
 
@@ -282,18 +300,18 @@
                 <div class="info-box3">
                     <h5>장단점</h5>
                     <p>장점: <span id="pros">나의 장점은.........</span></br>
-                    단점: <span id="cons">나의 단점은..........</span></p>
+                        단점: <span id="cons">나의 단점은..........</span></p>
                 </div>
             </div>
         </div>
         <div class="button-container">
             <div class="back_btn">
                 <a href="./index.html">
-                    <button type="button" class="btn btn-danger">뒤로가기</button>
+                    <button type="button" class="btn btn-primary">뒤로가기</button>
                 </a>
             </div>
             <div class="cardDle">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo">멤버 삭제</button>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -315,16 +333,17 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
+                                <button id="deleteButton" style="background-color: red;" type="button"
+                                    class="btn btn-primary">삭제</button>
                                 <button style="background-color: gray;" type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">닫기</button>
-                                <button id="deleteButton" style="background-color: blue;" type="button"
-                                    class="btn btn-primary">삭제</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
