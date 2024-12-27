@@ -183,7 +183,7 @@
         mems.forEach((mem) => {
             let row = mem.data();
             let imgurl = row['imgurl'];
-            let name = row['name'];
+            let name = row['name']; 
             let chara = row['chara'];
             let id = mem.id;
 
@@ -245,8 +245,8 @@
             const docRef = doc(db, "guestbook", id)
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                if(docSnap.data()['passwd']==$('#passwd').val()){
-                    await deleteDoc(doc(db, "members", id));
+                if(docSnap.data()['passwd']==$('#commentPasswd').val()){
+                    await deleteDoc(doc(db, "guestbook", id));
                     alert('삭제되었습니다');
                     window.location.reload();
                 }
@@ -495,7 +495,7 @@
                 <div class="modal-body">
                   <form>
                       <div class="mb-3">
-                          <label for="passwd" class="col-form-label">패스워드:</label>
+                          <label for="commentPasswd" class="col-form-label">패스워드:</label>
                           <input type="password" class="form-control" id="commentPasswd">
                           <input type="hidden" class="form-control" id="commentid">
                       </div>
