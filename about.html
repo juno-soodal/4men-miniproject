@@ -19,16 +19,16 @@
             font-style: normal;
         }
 
-        .container {
-            width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        .full-width-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
         }
 
         .title {
+            width: 100%;
             text-align: center;
-            padding: 20px;
-            border: 1px solid white;
+            padding: 50px 0;
             margin-bottom: 20px;
             background-image: url('https://images.unsplash.com/photo-1513735539099-cf6e5d559d82?q=80&w=3772&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
@@ -38,8 +38,12 @@
         }
 
         .content {
+            width: 800px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
-            gap: 20px;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         .left-section {
@@ -51,7 +55,7 @@
         }
 
         .right-section {
-            width: 60%;
+            width: 58%;
             background-color: gray;
             display: flex;
             flex-direction: column;
@@ -184,7 +188,21 @@
 </head>
 
 <body>
-    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" href="#!">4MEN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <button onclick="designed()" class="btn" class="nav-item"><a class="nav-link active"
+                            aria-current="page" href="#!">Designed by</a></button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="full-width-container">
         <div class="title">
             <h1>4 MEN</h1>
         </div>
